@@ -60,10 +60,21 @@ app.post('/create-subscription', async (req, res) => {
   const { email, priceId } = req.body;
 
   try {
-    // Create a new customer if one doesn't exist
-    const customer = await stripe.customers.create({
-      email,
+    // Check if customer already exists
+    const existingCustomers = await stripe.customers.list({
+      email: email,
+      limit: 1
     });
+
+    let customer;
+    if (existingCustomers.data.length > 0) {
+      customer = existingCustomers.data[0];
+    } else {
+      // Create a new customer if one doesn't exist
+      customer = await stripe.customers.create({
+        email,
+      });
+    }
 
     // Create the subscription and expand the latest_invoice and payment_intent
     const subscription = await stripe.subscriptions.create({
@@ -73,6 +84,11 @@ app.post('/create-subscription', async (req, res) => {
       payment_settings: { save_default_payment_method: 'on_subscription' },
       expand: ['latest_invoice.payment_intent'],
     });
+
+    // Ensure we have a valid payment intent client secret
+    if (!subscription.latest_invoice?.payment_intent?.client_secret) {
+      throw new Error('Failed to retrieve payment intent client secret');
+    }
 
     // Send the client_secret to the frontend
     res.json({

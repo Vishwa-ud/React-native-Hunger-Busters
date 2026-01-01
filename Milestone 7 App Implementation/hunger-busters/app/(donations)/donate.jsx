@@ -47,14 +47,14 @@ const Donate = () => {
         ...schoolResponse.data.map(request => ({
           ...request,
           type: 'school',
-          monthlyPriceId: 'price_1Q7xDqG4mkmOcCt5dX6Bd5RN',
-          annualPriceId: 'price_1Q7xFSG4mkmOcCt580QetHxB'
+          monthlyPriceId: 'price_1Sks10LSHj96p9V6us3CJjHR', // Replace with your monthly price ID
+          annualPriceId: 'price_1Sks1JLSHj96p9V6rWyDRXMC' // Replace with your annual price ID
         })),
         ...elderResponse.data.map(request => ({
           ...request,
           type: 'elder',
-          monthlyPriceId: 'price_1Q7xDqG4mkmOcCt5dX6Bd5RN',
-          annualPriceId: 'price_1Q7xFSG4mkmOcCt580QetHxB'
+          monthlyPriceId: 'price_1Sks10LSHj96p9V6us3CJjHR', // Replace with your monthly price ID
+          annualPriceId: 'price_1Sks1JLSHj96p9V6rWyDRXMC' // Replace with your annual price ID
         })),
       ];
 
@@ -81,40 +81,42 @@ const Donate = () => {
       const priceId = subscriptionType === 'monthly' ? selectedRequest.monthlyPriceId : selectedRequest.annualPriceId;
   
       const response = await axios.post(`${apiUrl}/create-subscription`, {
-        email: userEmail,  // Replace with actual email from the user
+        email: userEmail,
         priceId,
       });
   
-      const { clientSecret } = response.data;
+      const { clientSecret, subscriptionId } = response.data;
+  
+      if (!clientSecret) {
+        console.error("No client secret received from server");
+        return Alert.alert("Error", "Failed to initialize payment. Please try again.");
+      }
   
       const { error: initError } = await initPaymentSheet({
         paymentIntentClientSecret: clientSecret,
-        allowsDelayedPaymentMethods: true,
         merchantDisplayName: 'HungerBuster',
+        returnURL: 'hungerbusters://donate',
       });
   
       if (initError) {
         console.error("Init PaymentSheet error:", initError);
-        return Alert.alert("Error", "Failed to initialize payment sheet");
+        return Alert.alert("Error", `Failed to initialize payment: ${initError.message}`);
       }
   
       const { error: paymentError } = await presentPaymentSheet();
   
       if (paymentError) {
+        console.error("Payment error:", paymentError);
         Alert.alert("Payment failed", paymentError.message);
       } else {
-        // Get the donation name based on the type (school or elder)
         const donationName = selectedRequest.type === 'school' ? selectedRequest.schoolName : selectedRequest.elderHomeName;
-  
-        // Show the notification alert with the donation name and subscription type
         const subscriptionMessage = `You have successfully subscribed to ${donationName} with a ${subscriptionType} plan!`;
         Alert.alert("Donation Subscription Successful", subscriptionMessage);
-  
-        // You can perform any other actions here, like updating the UI or resetting state
       }
     } catch (err) {
       console.error("Error in donation:", err);
-      Alert.alert("Error", "Something went wrong. Please try again.");
+      const errorMessage = err.response?.data?.error || err.message || "Something went wrong. Please try again.";
+      Alert.alert("Error", errorMessage);
     } finally {
       setModalVisible(false);
     }
