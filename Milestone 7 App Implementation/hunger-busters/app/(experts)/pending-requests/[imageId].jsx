@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { BlurView } from "expo-blur";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import ShaderCanvas from "../../shaderCanvas";
+import { LinearGradient } from 'expo-linear-gradient';
 import CustomButton from "../../../components/CustomButton";
 import TransparentTopBar from "../../../components/TransparentTopBar";
 
@@ -143,7 +143,10 @@ const PendingRequests = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white relative">
-      <ShaderCanvas />
+      <LinearGradient
+        colors={['#000000', '#1a1a2e', '#16213e']}
+        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+      />
       <View className="flex-grow">
         <TransparentTopBar title={formState.title} onBackPress={handleBackPress} />
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 60 }}>

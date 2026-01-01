@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Table, Row, Rows } from "react-native-table-component";
-import ShaderCanvas from "../shaderCanvas";
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from "expo-router";
 import TransparentTopBar from "../../components/TransparentTopBar";
 
@@ -152,7 +152,10 @@ const ExpertDashboard = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-pink">
-      <ShaderCanvas />
+      <LinearGradient
+        colors={['#000000', '#1a1a2e', '#16213e']}
+        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+      />
 
       <TransparentTopBar
         title="Experts Dashboard"

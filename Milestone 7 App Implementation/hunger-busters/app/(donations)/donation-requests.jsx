@@ -4,7 +4,7 @@ import axios from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
 import TransparentTopBar from '../../components/TransparentTopBar';
 import { router } from 'expo-router';
-import ShaderCanvas from '../shaderCanvas';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const DonationRequests = () => {
@@ -174,7 +174,10 @@ const DonationRequests = () => {
 
   return (
     <>
-    <ShaderCanvas />
+    <LinearGradient
+      colors={['#000000', '#1a1a2e', '#16213e']}
+      style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+    />
     <View className="flex-1 p-7">
       
       <View className="pt-10 pb-3">

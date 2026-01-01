@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import ShaderCanvas from '../shaderCanvas';
+import { LinearGradient } from 'expo-linear-gradient';
 import CustomButton from '../../components/CustomButton';
 import { images } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
@@ -27,7 +27,10 @@ const Home = () => {
 
   return (
     <>
-      <ShaderCanvas />
+      <LinearGradient
+        colors={['#000000', '#1a1a2e', '#16213e']}
+        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+      />
       <SafeAreaView className="flex-1">
         <ScrollView className="px-4">
           {/* Header Section */}

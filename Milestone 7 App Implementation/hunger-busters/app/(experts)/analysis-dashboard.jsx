@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions, Platform} from 'r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PieChart, LineChart } from 'react-native-chart-kit';
 import TransparentTopBar from '../../components/TransparentTopBar';
-import ShaderCanvas from '../shaderCanvas';
+import { LinearGradient } from 'expo-linear-gradient';
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
@@ -160,7 +160,10 @@ const AnalysisDashboard = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ShaderCanvas />
+      <LinearGradient
+        colors={['#000000', '#1a1a2e', '#16213e']}
+        style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+      />
 
       <View className="p-1 shadow-sm">
       <BlurView intensity={110} tint="light" className="rounded-b-3xl">

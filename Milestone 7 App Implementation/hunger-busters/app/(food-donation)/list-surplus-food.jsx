@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
-import ShaderCanvas from "../shaderCanvas";
+import { LinearGradient } from 'expo-linear-gradient';
 const apiUrl = process.env.EXPO_PUBLIC_API_URL; // Adjust this according to your environment variable setup
 
 const ListSurplusFood = () => {
@@ -131,7 +131,10 @@ const ListSurplusFood = () => {
 
   return (
     <>
-    <ShaderCanvas/>
+    <LinearGradient
+      colors={['#000000', '#1a1a2e', '#16213e']}
+      style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+    />
     <SafeAreaView className="flex-1 bg-pink mb-10">
       <FlatList
         data={foodData}
