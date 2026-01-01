@@ -94,36 +94,6 @@ const TabsLayout = () => {
           )
          }}
          />
-        <Tabs.Screen
-         name="food"
-         options={{
-          title: 'food',
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon 
-              icon={icons.profile}
-              color={color}
-              name="food"
-              focused={focused}
-            />
-          )
-         }}
-         />
-        <Tabs.Screen
-         name="recipes"
-         options={{
-          title: 'recipes',
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon 
-              icon={icons.profile}
-              color={color}
-              name="recipes"
-              focused={focused}
-            />
-          )
-         }}
-         />
       </Tabs>
     </>
   )
