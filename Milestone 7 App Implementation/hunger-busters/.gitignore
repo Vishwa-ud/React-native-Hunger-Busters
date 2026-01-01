@@ -1,7 +1,9 @@
 # Logs
 logs
 *.log
+
 node_modules/
+package-lock.json
 .expo/
 dist/
 npm-debug.*
